@@ -27,46 +27,19 @@
 		z-index: 1000;
 	}
 
+	.mx-3 {
+    	margin-right: 0.5rem!important;
+    	margin-left: 0.5rem!important;
+		margin-top: 0.5rem!important;
+		margin-bottom: 0.5rem!important;
+	}
+
+	.footerclick {
+		cursor:pointer;
+	}
+
 	.my-float {
 		margin-top: 22px;
-	}
-	.carousel-control-next,
-	.carousel-control-prev /*, .carousel-indicators */ {
-		filter: invert(100%);
-	}
-
-	@media (max-width: 768px) {
-		.carousel-inner .carousel-item > div {
-			display: none;
-		}
-		.carousel-inner .carousel-item > div:first-child {
-			display: block;
-		}
-	}
-
-	.carousel-inner .carousel-item.active,
-	.carousel-inner .carousel-item-next,
-	.carousel-inner .carousel-item-prev {
-		display: flex;
-	}
-
-/* display 3 */
-	@media (min-width: 768px) {
-		
-		.carousel-inner .carousel-item-right.active,
-		.carousel-inner .carousel-item-next {
-		transform: translateX(33.333%);
-		}
-		
-		.carousel-inner .carousel-item-left.active, 
-		.carousel-inner .carousel-item-prev {
-		transform: translateX(-33.333%);
-		}
-	}
-
-	.carousel-inner .carousel-item-right,
-	.carousel-inner .carousel-item-left{ 
-	transform: translateX(0);
 	}
 
 </style>
@@ -74,7 +47,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Dex-Terity</title>
+	<title>DeX-Terity</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
@@ -85,6 +58,8 @@
 	<link href="{% static 'admin-lte/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 	<link href="{% static 'admin-lte/bootstrap/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet"
 		type="text/css">
+		<link href="{% static 'admin-lte/bootstrap/css/sb-admin-2.min.css' %}" rel="stylesheet">
+
 	<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
 	<style>
@@ -153,13 +128,13 @@
 			<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 				<ul class="navbar-nav w-50">
 					<li class="nav-item col">
-						<a class="nav-link link-primary" href="/in_dex">Home</a>
+						<a class="nav-link text-primary" href="/in_dex">Home</a>
 					</li>
 					<li class="nav-item col">
-						<a class="nav-link active" aria-current="page" href="/dexterity">Dex-Terity</a>
+						<a class="nav-link active" aria-current="page" href="/dexterity">DeX-Terity</a>
 					</li>
 					<li class="nav-item col">
-						<a class="nav-link link-primary" href="/contactus">Contact us</a>
+						<a class="nav-link text-primary" href="/contactus">Contact us</a>
 					</li>
 					<li class="nav-item col">
 						<a style="font-size: 16px;" class="btn btn-primary rounded-pill w-75 js-signin-modal-trigger"
@@ -312,33 +287,34 @@
 		</div> <!-- cd-signin-modal__container -->
 	</div> <!-- cd-signin-modal -->
 
+	<div class="container">
+		<div class="row">
+			<div class="row text-center">
+				<div class="col col-lg-10 offset-lg-1">
+					<h1 class="gy-5 text-primary m-5">Welcome to DeX-Terity!</h1>
+					<h5 class="fw-bold text-secondary"><nobr>Learn about our pilot region using data from the Central Lake Ontario
+						Conservation Area (CLOCA)</nobr> and the Toronto and Region Conservation Authority (TRCA).</h5>
+					<p class="m-3"><nobr>Explore with the map tool. Learn about spatial and temporal patterns in land-use data,
+						water quality and more!</nobr></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div id="viewDiv">
 	</div>
 
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-4">
-				<h5 class="text-primary">Legend</h5>
-				<div class='box agricultural'>Agricultural Land</div>
-				<div class='box anthropogenic'>Anthropogenic Land</div>
-				<div class='box natural'>Natural Land</div>
-				<div class='box water'>Surface Water Land</div>
-				<div class='box urban'>Urban Land</div>
-				<div class='box rural'>Rural Land</div>
-				<div class='box other'>Other</div>
+			<div class="col-lg-8">
+				<h5 class="text-primary">Legend <span id="showmoreoption" style="cursor:pointer; color:black; font-size:13px"><u>Show more</u></span>
+					<span id="hidemoreoption" style="cursor:pointer; color:black; font-size:13px"><u>Hide more</u></span></h5>
+				<p class="showlegend" style="font-size:12px">The DeX-Terity map shows seven major land use types:</p>
+				<div class="pop-over-container-hoverdemographictbl" style="cursor:pointer;"><img class="img-fluid showlegend" src="{% static 'admin-lte/dist/img/dexteritybar.svg' %}"></div>
 			</div>
 			<div class="col-lg-4">
-				<div><img class="img-fluid" src="{% static 'admin-lte/dist/img/hotspot.png' %}"> Hotspot</div>
-				<div><img class="img-fluid" src="{% static 'admin-lte/dist/img/normalregion.png' %}"> Normal</div>
-			</div>
-		</div>
-		<div class="row text-center">
-			<div class="col col-lg-10 offset-lg-1">
-				<h1 class="gy-5 text-primary m-5">Welcome to DeX-Terity!</h1>
-				<h5 class="fw-bold text-secondary">Learn about our pilot region using data from the Central Lake Ontario
-					Conservation Area (CLOCA)<br /> and the Toronto and Region Conservation Authority (TRCA).</h5>
-				<p class="m-3">Explore with the map tool. Learn about spatial and temporal patterns in land-use data,
-					water quality and more!</p>
+				<div class="pop-over-container-abthreshold" style="cursor:pointer;"><img class="img-fluid" src="{% static 'admin-lte/dist/img/hotspot.png' %}"> Above Threshold</div>
+				<div class="pop-over-container-belowthreshold" style="cursor:pointer;"><img class="img-fluid" src="{% static 'admin-lte/dist/img/normalregion.png' %}"> Below Threshold</div>
 			</div>
 		</div>
 	</div>
@@ -354,9 +330,8 @@
 						<div class="col col-md-3">
 							<img class="img-fluid" src="{% static 'admin-lte/assets/img/new_d/icons-01.png' %}">
 						</div>
-						<div class="col col-md-9">
-							<h6 class="text-primary fw-bold p-3">Data Platform <small class="fw-normal">/
-									Descriptive</small></h6>
+						<div class="col col-md-9 mt-3">
+							<h6 class="text-primary fw-bold">Data Platform / Descriptive </h6>
 							<p class="text-secondary">Access and view disparate sources of data using our map tool.</p>
 						</div>
 					</div>
@@ -365,9 +340,8 @@
 						<div class="col col-md-3">
 							<img class="img-fluid" src="{% static 'admin-lte/assets/img/new_d/icons-02.png' %}">
 						</div>
-						<div class="col col-md-9">
-							<h6 class="text-primary fw-bold p-3">Graphical Analysis <small class="fw-normal">/
-									Explanatory</small></h6>
+						<div class="col col-md-9 mt-3">
+							<h6 class="text-primary fw-bold">Graphical Analysis / Explanatory</h6>
 							<p class="text-secondary">Visualize changes to land-use, population, air and water quality
 								by watershed over time. Explore causal links between these parameters.</p>
 						</div>
@@ -377,9 +351,8 @@
 						<div class="col col-md-3">
 							<img class="img-fluid" src="{% static 'admin-lte/assets/img/new_d/icons-03.png' %}">
 						</div>
-						<div class="col col-md-9">
-							<h6 class="text-primary fw-bold p-3">Trends Analysis <small class="fw-normal">/
-									Predictive</small></h6>
+						<div class="col col-md-9 mt-3">
+							<h6 class="text-primary fw-bold">Trends Analysis / Predictive</small></h6>
 							<p class="text-secondary">Use DeX-Terity forecasting tools to compare and assess
 								environmental and societal risks arising from different watershed futures.</p>
 						</div>
@@ -389,9 +362,8 @@
 						<div class="col col-md-3">
 							<img class="img-fluid" src="{% static 'admin-lte/assets/img/new_d/icons-04.png' %}">
 						</div>
-						<div class="col col-md-9">
-							<h6 class="text-primary fw-bold p-3">Decision-Making Tool <small class="fw-normal">/
-									Prescriptive</small></h6>
+						<div class="col col-md-9 mt-3">
+							<h6 class="text-primary fw-bold">Decision-Making Tool / Prescriptive</h6>
 							<p class="text-secondary">Mitigate risks by identifying and optimizing watershed protection
 								priorities and actions.</p>
 						</div>
@@ -400,10 +372,11 @@
 
 				<div class="row">
 					<h2 class="gy-5 text-primary mt-5 mb-4">Ready to get started?</h2>
+					<p class="m-2 text-primary">Use the DeX-Terity tool today. Create an account for access to our full data platform (with information from 2000 - 2020), including our Graphical Analysis, Trends Analyses, and Decision-Making Tools</p>
 					<p class="m-2">
-						<button class="btn btn-primary rounded-pill" type="button"
-							onclick="location.href='/new_dashboard'">
-							<h5 class=" fw-bold lh-lg mx-5">Create your account</h5>
+						<button class="btn rounded-pill " type="button" style="background-color: #165DA9;">
+							<a style="font-size: 16px;" class="text-decoration-none text-white w-75 js-signin-modal-trigger"
+								href="#0" data-signin="login">Create your account</a>
 						</button>
 					</p>
 				</div>
@@ -413,83 +386,254 @@
 
 		</div>
 	</div>
-
+	
 	<div class="container text-center my-3">
 		<h1 class="gy-5 text-blue-primary m-5">Data Sources</h1>
 		<div class="row mx-auto my-auto">
-			<div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
-				<div class="carousel-inner w-100" role="listbox">
+			<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+				</ol>
+				<!-- Carousal item 1 -->
+				<div class="carousel-inner" role="listbox">
 					<div class="carousel-item active">
-						<div class="col-md-4">
-							<div class="card card-body">
-								<h6>CLCC Water Quality Data 1</h6>
-								<img class="img-fluid" src="{% static 'admin-lte/assets/img/waterqtytrca.jpg' %}" style="height:190px;">
-								<p class="m-3">
-									<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://data.trca.ca/dataset?tags=Quality','_blank')">
-										<h6 class="mx-3">Read more</h6>
-									</button>
-								</p>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>TRCA Water Quality Data</h6>
+										<div style="padding-top: 18px;"></div>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/waterqtytrca.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://data.trca.ca/dataset?tags=Quality','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>CLOCA Water Quality Data</h6>
+										<div style="padding-top: 18px;"></div>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/clocawaterquality.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://open-data.cloca.com/','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>Provincial Water Quality Monitoring Network Data</h6>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/provincialwaterqualitynetwork.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://data.ontario.ca/dataset/provincial-stream-water-quality-monitoring-network','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
+					<!-- Carousal item 2-->
 					<div class="carousel-item">
-						<div class="col-md-4">
-							<div class="card card-body">
-								<h6>CLCC Water Quality Data 2</h6>
-								<img class="img-fluid" src="{% static 'admin-lte/assets/img/clocawaterquality.jpg' %}" style="height:190px;">
-								<p class="m-3">
-									<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://open-data.cloca.com/','_blank')">
-										<h6 class="mx-3">Read more</h6>
-									</button>
-								</p>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>Environment and Climate Change Canada</h6>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/environmentalclimatedata.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://open.canada.ca/data/en/dataset/51dbf91e-509c-437b-ab9e-eca6d0bf6fa8','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>Ontario Watershed Boundaries</h6>
+										<div style="padding-top: 18px;"></div>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/ontariowaterbodyboundaries.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://geohub.lio.gov.on.ca/maps/mnrf::ontario-watershed-boundaries-owb/explore?location=40.397199%2C-82.339420%2C2.74','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>TRCA Water Quality Data</h6>
+										<div style="padding-top: 18px;"></div>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/waterqtytrca.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://data.trca.ca/dataset?tags=Quality','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
+					<!-- Carousal item 3-->
 					<div class="carousel-item">
-						<div class="col-md-4">
-							<div class="card card-body">
-								<h6>CLCC Water Quality Data 3</h6>
-								<img class="img-fluid" src="{% static 'admin-lte/assets/img/provincialwaterqualitynetwork.jpg' %}" style="height:190px;">
-								<p class="m-3">
-									<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://data.ontario.ca/dataset/provincial-stream-water-quality-monitoring-network','_blank')">
-										<h6 class="mx-3">Read more</h6>
-									</button>
-								</p>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>CLOCA Water Quality Data</h6>
+										<div style="padding-top: 18px;"></div>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/clocawaterquality.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://open-data.cloca.com/','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>Provincial Water Quality Monitoring Network Data</h6>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/provincialwaterqualitynetwork.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://data.ontario.ca/dataset/provincial-stream-water-quality-monitoring-network','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>Environment and Climate Change Canada</h6>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/environmentalclimatedata.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://open.canada.ca/data/en/dataset/51dbf91e-509c-437b-ab9e-eca6d0bf6fa8','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
+					<!-- Carousal item 4-->
 					<div class="carousel-item">
-						<div class="col-md-4">
-							<div class="card card-body">
-								<h6>CLCC Water Quality Data 4</h6>
-								<img class="img-fluid" src="{% static 'admin-lte/assets/img/environmentalclimatedata.jpg' %}" style="height:190px;">
-								<p class="m-3">
-									<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://www.canada.ca/en/environment-climate-change.html','_blank')">
-										<h6 class="mx-3">Read more</h6>
-									</button>
-								</p>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>Ontario Watershed Boundaries</h6>
+										<div style="padding-top: 18px;"></div>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/ontariowaterbodyboundaries.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://geohub.lio.gov.on.ca/maps/mnrf::ontario-watershed-boundaries-owb/explore?location=40.397199%2C-82.339420%2C2.74','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>TRCA Water Quality Data</h6>
+										<div style="padding-top: 18px;"></div>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/waterqtytrca.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://data.trca.ca/dataset?tags=Quality','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>CLOCA Water Quality Data</h6>
+										<div style="padding-top: 18px;"></div>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/clocawaterquality.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://open-data.cloca.com/','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
+					<!-- Carousal item 5-->
 					<div class="carousel-item">
-						<div class="col-md-4">
-							<div class="card card-body">
-								<h6>CLCC Water Quality Data 5</h6>
-								<img class="img-fluid" src="{% static 'admin-lte/assets/img/ontariowaterbodyboundaries.jpg' %}" style="height:190px;">
-								<p class="m-3">
-									<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://geohub.lio.gov.on.ca/maps/mnrf::ontario-watershed-boundaries-owb/explore?location=40.397199%2C-82.339420%2C2.74','_blank')">
-										<h6 class="mx-3">Read more</h6>
-									</button>
-								</p>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>Provincial Water Quality Monitoring Network Data</h6>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/provincialwaterqualitynetwork.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://data.ontario.ca/dataset/provincial-stream-water-quality-monitoring-network','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>Environment and Climate Change Canada</h6>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/environmentalclimatedata.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://open.canada.ca/data/en/dataset/51dbf91e-509c-437b-ab9e-eca6d0bf6fa8','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card" style="height: 350px;">
+									<div class="card-body" style="height: 100%;">
+										<h6>Ontario Watershed Boundaries</h6>
+										<div style="padding-top: 18px;"></div>
+										<img class="img-fluid" src="{% static 'admin-lte/assets/img/ontariowaterbodyboundaries.jpg' %}" style="height:190px;">
+										<p class="m-3">
+											<button class="btn btn-primary rounded-pill" type="button" onclick="window.open('https://geohub.lio.gov.on.ca/maps/mnrf::ontario-watershed-boundaries-owb/explore?location=40.397199%2C-82.339420%2C2.74','_blank')">
+												<h6 class="mx-3">Learn more</h6>
+											</button>
+										</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+				<a class="carousel-control-prev w-auto" href="#myCarousel" role="button" data-slide="prev">
 					<span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
 					<span class="sr-only">Previous</span>
 				</a>
-				<a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+				<a class="carousel-control-next w-auto" href="#myCarousel" role="button" data-slide="next">
 					<span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
 					<span class="sr-only">Next</span>
 				</a>
@@ -497,7 +641,7 @@
 		</div>
 	</div>
 
-	<div class="container-fluid mt-5 text-white blue-primary">
+	<div class="container-fluid mt-5 text-white" style="background-color: #165DA9;">
 		<div class="row text-center">
 			<div class="col">
 				<div class="m-5"><img class="img-fluid" src="{% static 'admin-lte/assets/img/new_d/logo.png' %}"></div>
@@ -516,29 +660,29 @@
 			<div class="col">
 				<div class="row m-5">
 					<ul>
-						<li class="list-group-item">See DeX-Terity</li>
-						<li class="list-group-item">About Us</li>
-						<li class="list-group-item">Contact Us</li>
+						<li class="list-group-item footerclick"><a href="/in_dex" style="color:white">See DeX-Terity</a></li>
+						<li class="list-group-item footerclick"><a href="/contactus" style="color:white">Contact Us</a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="col">
 				<div class="row m-5">
 					<ul>
-						<li class="list-group-item">Privacy Policy</li>
-						<li class="list-group-item">Terms of Service</li>
+						<li class="list-group-item footerclick">Privacy Policy</li>
+						<li class="list-group-item footerclick">Terms of Service</li>
+						<li class="list-group-item footerclick">About Us</li>
 					</ul>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col d-flex justify-content-center">
 				<div class="row mx-5 my-3" style="background-color:white;">
 					<div class="col col-12 mb-3">
-						<p class="text-primary mt-2 text-start">Powered by:</p>
+						<!-- <p class="text-primary mt-2 text-start">Powered by:</p> -->
 					</div>
 					<div class="col col-12">
 						<img class="img-fluid" src="{% static 'admin-lte/assets/img/new_d/CGLR_logo.png' %}">
 					</div>
-					<div class="col col-12 mt-3">
+					<div class="col col-12 mt-3 mb-3">
 						<img class="img-fluid" src="{% static 'admin-lte/assets/img/new_d/pollution_probe.png' %}">
 					</div>
 				</div>
@@ -646,32 +790,40 @@
 	<script src="https://js.arcgis.com/4.23/"></script>
 	<script src="{% static 'admin-lte/assets/js/arcgisjs/arcgisjs.js' %} "></script>
 
+	<!-- login modal -->
+		<script src="{% static 'admin-lte/assets/js/js_loginmodal/main.js' %}"></script>
+		<script src="{% static 'admin-lte/assets/js/js_loginmodal/placeholders.min.js' %}"></script>
 
 	<script>
 		var jsonpointfile = {{ jsonvalue| safe }};
 		$(document).ready(function () {
 
-			$('#recipeCarousel').carousel({
-				interval: 10000
+			$('.pop-over-container-abthreshold').popover({
+				content: "This pin represents a location of interest where nutrient levels have been detected to be greater than those outlined by Ontario Drinking Water Quality standards (>0.02 mg/L phosphorus OR >10 mg/L nitrogen)",
+				trigger: "hover",
+				placement: "top",
+				
 			});
 
-			$('.carousel .carousel-item').each(function(){
-				var minPerSlide = 3;
-				var next = $(this).next();
-				if (!next.length) {
-				next = $(this).siblings(':first');
-				}
-				next.children(':first-child').clone().appendTo($(this));
+			$('.pop-over-container-belowthreshold').popover({
+				content: "This pin represents a location of interest where nutrient levels have been detected to be equal or lesser than those outlined by Ontario Drinking Water Quality standards (<=0.02 mg/L phosphorus AND <=10 mg/L nitrogen)",
+				trigger: "hover",
+				placement: "top",
 				
-				for (var i=0;i<minPerSlide;i++) {
-					next=next.next();
-					if (!next.length) {
-						next = $(this).siblings(':first');
-					}
-					
-					next.children(':first-child').clone().appendTo($(this));
-				}
 			});
+
+			var hoverdemographictable = "<div><table class='table table-bordered' style='font-size: 11px;'><thead><tr><th>Land</th><th>Details</th></tr></thead><tbody><tr><td>Agricultural</td><td>Agriculture land, Crop land, Grass land, pasture land, etc</td></tr><tr><td>Anthropogenic</td><td>Airport, Athletic, Commercial, Golf facility, Industrial, etc</td></tr><tr><td>Natural</td><td>Natural forests, Coniferous forests, Mixed forests, Savannas, etc</td></tr><tr><td>Surface Water</td><td>Meadow marsh, Swamps, Fens, Aquatic, Beach, etc</td></tr><tr><td>Urban</td><td>Urban residential</td></tr></tr><tr><td>Rural</td><td>Rural residential</td></tr></tr><tr><td>Other</td><td>Aggregated land, Vacant land, Plantation, etc</td></tr></tbody></table></div>"
+
+			$('.pop-over-container-hoverdemographictbl').popover({
+				content: hoverdemographictable,
+				html : true,
+				trigger: "hover",
+				placement: "top",
+				sanitize: false
+			});
+
+			$(".showlegend").hide();
+			$("#hidemoreoption").hide();
 
 
 			var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -679,7 +831,7 @@
 				return new bootstrap.Tooltip(tooltipTriggerEl)
 			});
 			var regionrenderurl = "{{regiondemographicrenderurl|safe}}";
-			var loadingurl = "localhost:8000";
+			var loadingurl = "199.241.160.97";
 			loadmapvalues(1, jsonpointfile, loadingurl, regionrenderurl, "{{yearselected}}", "{{ trcadurhammapcombinedurl| safe }}");
 			handleResize();
 			$(window).bind('resize', handleResize);
@@ -700,6 +852,18 @@
 			$(document).on('change', '.yearFrom', function () {
 				var yearselected = $(this).val();
 				window.location.href = '/filteryear/' + yearselected + "#hotspot";
+			});
+
+			$(document).on('click', '#showmoreoption', function () {
+				$('.showlegend').show();
+				$("#showmoreoption").hide();
+				$("#hidemoreoption").show();
+			});
+
+			$(document).on('click', '#hidemoreoption', function () {
+				$('.showlegend').hide();
+				$("#showmoreoption").show();
+				$("#hidemoreoption").hide();
 			});
 
 			$(document).on('click', '#searchYearOnMainMapHome', function () {

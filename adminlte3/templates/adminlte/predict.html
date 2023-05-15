@@ -27,7 +27,7 @@
         Predict
     </div>
     <div class="row ml-3">
-        <p class="text-primary font-weight-light">Use DeX-Terity tools to forecast potential impacts of indicators in our pilot.</p>
+        <p class="text-primary font-weight-light">Use DeX-Terity tools to forecast potential impacts of indicators in our pilot over time.</p>
     </div>
 
     <div class="row">
@@ -51,8 +51,8 @@
     <div class="row mt-3">
         <div class="col-lg p-2" style="background-color: rgba(228,228,228,1);">
             <p class="text-primary"> 2. Select Station ID</p>
-            <p class="text-secondary font-weight-light">More information about the water quality testing stations within <br>the pilot region can be
-                found here.</p>
+            <!-- <p class="text-secondary font-weight-light">More information about the water quality testing stations within <br>the pilot region can be
+                found here.</p> -->
         </div>
         <div class="col-lg p-2 d-flex justify-content-center" style="background-color: rgba(235,235,235,0.678);">
             <select class="mt-3 pl-5 pr-5 form-select" name="year" id="station" style="border-radius: 20px; height: 42px;"
@@ -82,16 +82,19 @@
 
     </div>
 
-    <div class="row d-flex justify-content-center col-12 m-2" id="placeimage">
-        <!-- <div id = "predicted_plot"></div> -->
-        <!-- <img id="plot_img" src="" style="width: 100%; height:50%"/> -->
+    <div class="row d-flex justify-content-center mt-4">
+        <p class="text-secondary" id="notebeforedownload"><b>NOTE:</b> The below graph represents the historical data with a blue line and predicted results with an orange line. The <span id="predictedvariable"></span> predicted results from the selected year range from <span id="yearfrompredicted"></span> to <span id="yeartopredicted"></span>. </p>
+    </div>
+
+    <div class="row d-flex justify-content-center col-12 m-2" id="placeimage" style="height: 370px;">
+        
     </div>
 
     <div class="row d-flex justify-content-center mt-4">
-        <p class="text-secondary">Get your predicted results in CVS/EXCEL format</p>
+        <p class="text-secondary" id="downloadtext"> Your scenario has been predicted! Download your results in .csv format</p>
     </div>
 
-    <div class="row mb-5 d-flex justify-content-center mt-4">
+    <div class="row mb-5 d-flex justify-content-center mt-2">
         <button id="download_btn" class="btn btn-outline-primary  rounded-pill pl-4 pr-4 " onclick=""><a
                 id="download_link"> Download <i class="fas fa-download"></i> </a></button>
     </div>
@@ -117,28 +120,12 @@
 <script src="{% static 'admin-lte/assets/nouislider/dist/nouislider.js'%}"></script>
 
 <script>
-    let stations = [28, 29, 30, 85, 3007703502, 6010400102, 6010400802, 6010700202,
-        6010800102, 6010800202, 6011100102, 6011100202, 6011100302,
-        6011100502, 6011100602, 6011100702, 6011100802, 6011200302,
-        6011200602, 6011600102, 6011600202, 6011600502, 6011600602, 988,
-        1328, 1329, 1330, 17002113602, 17002113702, 600010258, 600010708,
-        600013587, 6008000602, 6008000702, 6008200302, 6008300202,
-        6008300402, 6008300902, 6008301202, 6008301802, 6008301902,
-        6008310302, 6008310402, 6008500302, 6008500402, 6008501402,
-        6009400202, 6009700302, 6009700702, 6009701102, 6009701302,
-        6009701802, '6009701802', '6010400102', '6010400802', '6010402302',
-        '6010402502', '6010402602', '6010402702', '6010402802',
-        '6010402902', '6010403702', '6010700202', '7th Concession', '85',
-        'Annadale', 'Brock Ridge', 'CC005', 'Central 1', 'Central 10',
-        'Central 11', 'Central 12', 'Central 2', 'Central 3', 'Central 4',
-        'Central 5', 'Central 6', 'Central 7', 'Central 8', 'Central 9',
-        'East 1', 'East 10', 'East 11', 'East 12', 'East 2', 'East 3',
-        'East 4', 'East 5', 'East 6', 'East 7', 'East 8', 'East 9',
-        'FB003WM', 'PT001WM', 'Paulyn Park', 'Shoal Point', 'West 1',
-        'West 10', 'West 11', 'West 12', 'West 2', 'West 3', 'West 4',
-        'West 5', 'West 6', 'West 7', 'West 8', 'West 9'];
+    let stations = [6008310402, '6010700202', 'CC005', 6009400202, 6008301202, '6010402702', 6008501402, 6008310302, '6010402502', 6009701802, 6008300202, '6010403702', '6010402602', 6008500402, 6009701302, 6008000702, 'Shoal Point', '7th Concession', '6010402302', 6008500302, 6008301902, 6009700302, '6010402802', 'FB003WM', 'Brock Ridge', 6008000602, 'Paulyn Park', '6010402902', 6009700702, 6008300902, 6008301802, 6008200302, 6009701102, 'PT001WM', 6008300402, '6010400802'];
 
     $(document).ready(function () {
+        $('#download_btn').hide();
+        $('#downloadtext').hide();
+        $("#notebeforedownload").hide();
         var station;
         var stationSelectbox = stationIdSelectbox();
         $("#station").html(stationSelectbox);
@@ -147,7 +134,7 @@
             var selectboxreturn = "<option value='all' selected>Select Station ID</option>";
             $(stations).each((index, element) => {
                 // console.log(`current index : ${index} element : ${element}`)
-                selectboxreturn += "<option value='" + element + "'>" + element + "</option>";
+                selectboxreturn += "<option value=" + element + ">" + element + "</option>";
             });
             return selectboxreturn;
         }
@@ -157,7 +144,6 @@
         });
 
 
-        document.getElementById("download_btn").disabled = true;
 
         var slider = document.getElementById('slider');
         var station_id;
@@ -213,6 +199,7 @@
                 var_to_predict = 'TN';
             }
             console.log(var_to_predict);
+            console.log(typeof(globalThis.station));
             $.ajax({
                 type: 'get',
                 url: '/getPredictionOutput/'+var_to_predict+'/'+globalThis.station+'/'+parseInt(selected_years[0]) +'/'+parseInt(selected_years[1]),
@@ -267,8 +254,34 @@
                         elem.setAttribute("src", 'static/admin-lte/dist/js/data/' + data.station_ + '.png');
                         elem.setAttribute("width", "100%");
                         document.getElementById("placeimage").appendChild(elem);
-                        document.getElementById("download_btn").disabled = false;
                         document.getElementById('download_link').setAttribute('href', 'static/admin-lte/dist/js/data/' + data.station_ + 'predicted.csv')
+                        $('#download_btn').show();
+                        $('#downloadtext').show();
+                        $("#notebeforedownload").show();
+                        if(var_to_predict == "TP"){
+                            $("#predictedvariable").html("Total phosphorus");   
+                        }else if(var_to_predict == "TN"){
+                            $("#predictedvariable").html("Total nitrogen");   
+                        }
+                        var processedfromselectedyear = "";
+                        var processedtoselectedyear = "";
+                        // let pointPosition1 = selected_years[0].indexOf('.');
+                        // let pointPosition2 = selected_years[1].indexOf('.');
+                        let selectedfromyear = selected_years[0].replace(/\.\d*/g, "");
+                        let selectedtoyear = selected_years[1].replace(/\.\d*/g, "");
+                        // If the point is found, remove all the text to the right of it
+                        // if (pointPosition1 !== -1) {
+                        //     selectedfromyear = selected_years[0].substring(0, pointPosition1 + 1);
+                        // }else{
+                        //     selectedfromyear = selected_years[0];
+                        // }
+                        // if (pointPosition2 !== -1) {
+                        //     selectedtoyear = selected_years[1].substring(0, pointPosition2 + 1);
+                        // }else{
+                        //     selectedtoyear = selected_years[1];
+                        // }
+                        $("#yearfrompredicted").html(selectedfromyear);
+                        $("#yeartopredicted").html(selectedtoyear);
                     }
                     else {
                         console.log("in else");
@@ -281,6 +294,7 @@
                 },
                 error: function (error) {
                     $('#predict').text('Predict');
+                    alert("Couldn't serve your request! Please try again.");
                     console.log("Error" + JSON.stringify(error));
                 }
             });

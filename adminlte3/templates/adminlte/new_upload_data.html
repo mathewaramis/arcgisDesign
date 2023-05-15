@@ -1,20 +1,28 @@
-{% extends 'adminlte/base.html' %}
+{% extends 'adminlte/new_dashboard_base.html' %}
 {% load static %}
 
 {% block content %}
 
-<div class="container-fluid">
-
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Upload console</h1>
-    </div>
+<div class="container-fluid m-4">
     <div class="row">
-        <div id="card1" class="card border-primary col-lg-4 mb-3">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Upload data</h6>
+        <h1 class="h3 text-primary mb-0 ">Upload user Data for DeX-Terity target prediction</h1><br>
+    </div>
+    <div class="row mb-4">
+        <p class="mb-0 font-weight-light text-primary">Follow these 2 steps and get your predicted data with our model</p><br>
+    </div>
+    <div class="row mb-5">
+        <div id="card1" class="card col-lg-5 mb-3 m-0 p-0 rounded-0">
+            <div class="card-header rounded-0" style="background-color: rgba(104,167,95,1);">
+                <div class="row">
+                <h6 class="h3 m-0 font-weight-bold text-white">1 </h6>
+                <h6 class="mt-1 ml-2 font-weight-bold text-white">Upload your data</h6>
+                </div>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="background-color: rgba(228,228,228,1);">
                 <!-- for phosphorus or nitrogen -->
+                <p class="font-weight-light text-secondary">Do you have additional water quality data from an
+                    area of interest? Upload to DeX-Terity today to forecast potential impacts of stressors on
+                    the watershed.</p>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input selectionradiobutton" type="radio" name="flexRadioDefault" value="tp" id="tpradiobtn" />
                     <label class="form-check-label" for="flexRadioDefault1"> Total Phosphorus</label>
@@ -25,23 +33,54 @@
                     <label class="form-check-label" for="flexRadioDefault2"> Total Nitrogen </label>
                 </div>
                 <!-- visualize data on map -->
-                <div class="form-check">
+                <!-- <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="visualizeOnMap" />
                     <label class="form-check-label" for="flexCheckDefault"> Visualize data on map</label>
-                </div>
+                </div> -->
 
-                <div class="text-center">
+                <div class="text-center mt-2">
                     <form id="fileInput">
                         {% csrf_token %}
-                    <input type="file" id="imgupload" style="display:none" id="fileInput" name="fileInput"/>
-                    <span id="OpenImgUpload" style="cursor:pointer;"><img class="img-fluid px-3 px-sm-4 mt-3 mb-4"
-                            style="width: 10rem;" src="{% static 'admin-lte/assets/img/upload_data.png' %}"
-                            alt="..."></span>
-                        </form>
+                        <input type="file" id="imgupload" style="display:none" id="fileInput" name="fileInput"/>
+                        <span class="text-primary p-2 border border-primary rounded" id="OpenImgUpload" style="cursor:pointer;">
+                                <i class="fas fa-upload"></i> 
+                                Upload area file  
+                        </span>
+                    </form>
                 </div>
-                <p id="displayFileName" style="color:red; font-size:12px;">Click on the icon to upload the csv file</p>
-                <p style="color:crimson" id="latitudelongitudemandatoryid">Note!! Latitude and Longitude columns are mandatory in excel sheet</p>
-                <label class="form-label font-weight-normal">
+                <div class="text-center">
+                    <button class="mt-2 btn btn-secondary rounded-0" data-toggle="modal" data-target="#example"> CSV File Requirements <i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">CSV file requirements</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>The CSV file must contain columns:</p>
+                            <p class="mb-0 pb-0 text-primary font-weight-light">Phosphorus prediction:</p>
+                            <p class="text-secondary font-weight-light">pH, 250mLandCover_Natural (ha), DissolvedOxygen (mg/L), Total Rain (mm) -7day Total (mm)
+                            (Not Mandatory), Population, Nitrate (mg/L)(Not Mandatory),
+                            Chloride (mg/L), Nitrite (mg/L), TotalNitrogen (mg/L) (Not Mandatory), TotalSuspendedSolids (mg/L), Nitrogen_Kjeldahl (mg/L).
+                            </p>
+                            <p class="mb-0 pb-0 text-primary font-weight-light">Nitrogen prediction: </p>
+                            <p class="text-secondary font-weight-light">Month, pH, Population, 10mLandCover_Natural(Ha), 10mLandCover_AnthropogenicNatural(Ha), TotalSuspendedSolids (mg/L), Conductivity (K), TotalPhosphorus (mg/L), Chloride (mg/L), Nitrate (mg/L)
+                            </p>
+                            <p class="text-primary font-weight-light">Need help? <a class="link-light" href="{% static 'admin-lte/dist/js/data/templates.zip' %}" download="">Click here to download our spreadsheet template. </a></p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <p class="mt-1 text-center" id="displayFileName" style="color:red; font-size:12px;"></p>
+                <p style="color:crimson; display: none;" id="latitudelongitudemandatoryid">Note!! Latitude and Longitude columns are mandatory in excel sheet</p>
+                <!-- <label class="form-label font-weight-normal">
                     <p class="text-justify font-weight-normal">The CSV file must contain columns:
                     <ul >
                         <p id="tpParams" class="font-weight-normal"> Phosphorus prediction: 
@@ -53,11 +92,11 @@
                                 TotalSuspendedSolids (mg/L), Nitrogen_Kjeldahl
                                 (mg/L)
                         </p>
-                        <!-- <li>'Oxygen, Dissolved (% Saturation)'</li>
+                        <li>'Oxygen, Dissolved (% Saturation)'</li>
                         <li>'Depth, Sample (Field)'</li>
                         <li>'Nitrite'</li>
                         <li>'Nitrogen, Total Kjeldahl(TKN)'</li>
-                        <li>'Solids, Suspended (TSS)'</li> -->
+                        <li>'Solids, Suspended (TSS)'</li> 
                     </ul>
                     <ul >
                         <p id="tnParams" class="font-weight-normal"> Nitrogen prediction: 
@@ -67,22 +106,27 @@
                             TotalPhosphorus (mg/L), Chloride (mg/L), Nitrate
                             (mg/L)
                         </p>
-                        <!-- <li>'Chloride'</li>
+                         <li>'Chloride'</li>
                         <li>'Nitrite'</li>
-                        <li>'Nitrate'</li> -->
+                        <li>'Nitrate'</li>
                     </ul>
                     </p>
-                </label>
+                </label> -->
                 <!-- <p id="next1" class="text-right "><a href="#" class="link-primary" aria-disabled="true">Next</a></p> -->
+                <div class="mt-5 text-center">
+                    <p class="text-primary font-weight-light"> <a class="link-light" href="{% static 'admin-lte/dist/js/data/templates.zip' %}" download="">Get our spreadsheet template</a></p>
+                    <!-- <button class="btn btn-outline-primary rounded-pill"> <a href="{% static 'admin-lte/dist/js/data/templates.zip' %}" download=""><i class="fas fa-download"></i> Download </a> </button> -->
+                </div>
                 <div class="d-flex flex-row-reverse">
                 <button id="next1" type="button" class="btn btn-link " disabled>Next</button>
-                <div class="spinner-border text-primary" role="status" id="uploaddataspinner">
+                <button id="reset" type="button" class="btn btn-link " style="display: none;" onClick="window.location.reload();">Reset</button>
+                <div class="spinner-border text-primary" role="status" style="display: none;" id="uploaddataspinner">
                     <span class="sr-only">Loading...</span>
                 </div>
                 </div>
             </div>
         </div>
-        <div id="card2" class="card col-lg-4 mb-4">
+        <!-- <div id="card2" class="card col-lg-4 mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">File Analytics</h6>
             </div>
@@ -95,7 +139,7 @@
                 <p style="color:slateblue">You file results will be shown here after uploading file.</p>
                 <p id="perfect" style="color: green; border:3px; border-style:solid; border-color:green;"></p>
 
-                <!-- <div class="custom-control custom-switch">
+                <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="nitrogen">
                     <label class="custom-control-label" for="nitrogen">Analyze for nitrogen</label>
                 </div>
@@ -106,7 +150,7 @@
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="bothelement">
                     <label class="custom-control-label" for="bothelement">Analyze for both elements</label>
-                </div> -->
+                </div> 
                 <ul id="missing_features" class="list-group">
 
                 </ul>
@@ -121,34 +165,47 @@
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
-        </div>
-        <div  id="card3" class="card col-lg-4 mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Results</h6>
-            </div>
-            <div class="card-body">
-                <div class="text-center">
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 10rem;"
-                        src="{% static 'admin-lte/assets/img/result_icon_after_analysis.png' %}" alt="...">
+        </div> -->
+        <div  id="card3" class="card ml-3 col-lg-5 mb-3 m-0 p-0 rounded-0">
+            <div class="card-header rounded-0" style="background-color: rgba(104,167,95,1);">
+                <div class="row">
+                <h6 class="h3 m-0 font-weight-bold text-white">2 </h6>
+                <h6 class="mt-1 ml-2 font-weight-bold text-white">Predict</h6>
                 </div>
+            </div>
+            <div class="card-body" style="background-color: rgba(228,228,228,1);">
+                <div class="text-center">
+                    <p id="initialtext" class="font-weight-light text-secondary">After processing your data, the result will be shown here</p>
+                    <p id="perfect" style="color: green; border:3px; border-style:solid; border-color:green; display: none;"></p>
                     <p style="color:slateblue" id="shape"></p>
                     <p style="color:slateblue" id="nullvalues"></p>
+                    <ul id="missing_features" class="list-group">
+
+                    </ul>
+                    <p class="text-primary" id="csv_result"></p>
+                </div>
+                <div id="upload_again" class="card-footer text-center" style="display: none">
+                    <button class="btn btn-primary" id="parametermissinguploadagainbutton">Upload again</button>
+                </div>
                 <div id="predictionbeforedivid">
                     <p style="color:green" id="successmsg"></p>
                     <p style="color:green" id="modelshapesuccess"></p>
                     <p style="color:goldenrod" id="modelshapewarn"></p>
                 </div>
-                <p style="color: green;" id="modelprocesssuccessfulmessageid">The data was successfully analyzed by the model. Click on <b>Go to predictions</b> to see the detailed report of the analysis</p>
-                <p style="color:red" id="excelnotacceptedbymodelid">Model run was not successful. Check the number of columns of the excel sheet. The model accepts only excel with prescribed column conditions. All other cases will be rejected by the model. Try reuploading a new excel sheet with the said condition</p>
+                <p style="color: green; display: none;" id="modelprocesssuccessfulmessageid">The data was successfully analyzed by the model.</p>
+                <p style="color:red; display: none;" id="excelnotacceptedbymodelid">Model run was not successful. Check the number of columns of the excel sheet. The model accepts only excel with prescribed column conditions. All other cases will be rejected by the model. Try reuploading a new excel sheet with the said condition</p>
             </div>
-            <div class="card-footer text-center">
-                <button id="runmodelid" class="btn btn-primary">Run model</button>
-                <button id="goToPredict" class="btn btn-success">Go to Predictions</button>
-                <button id="rerunmodeloferrorid" class="btn btn-danger">Re-do analysis</button>
-                <div class="spinner-border text-primary" role="status" id="modelpredictionspinner">
+            <div class="card-footer text-center" style="background-color: rgba(228,228,228,1);">
+                <button id="runmodelid" class="btn btn-primary" style="display:none">Run model</button>
+                <!-- <button id="goToPredict" class="btn btn-success">Go to Predictions</button> -->
+                <button id="DownloadResults" class="btn btn-outline-primary rounded-pill" style="display: none;"><i class="fa fa-download"></i><span
+                    style="padding-left:5px"><a href="{% static 'admin-lte/dist/js/data/recently_predicted.csv' %}" download="">Download result </a></span></button>          
+                <button id="visualize" class="btn btn-outline-primary rounded-pill" style="display: none;">Visualize</button>
+                <button id="rerunmodeloferrorid" class="btn btn-danger" style="display:none;">Re-do analysis</button>
+                <div class="spinner-border text-primary" role="status" id="modelpredictionspinner" style="display:none;">
                     <span class="sr-only">Loading...</span>
                 </div>
-            </div
+            </div>
         </div>
     </div>
 </div>
@@ -183,6 +240,31 @@
 <input id="modelshapeidafterprocess" type="hidden">
 
 
+<!-- graph modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="height: 750px;" id="graphspace">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Predicted Indicator</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="visualizemodal">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="" id="textplot">
+          
+</div>
+
 
 {% endblock %}
 
@@ -193,6 +275,10 @@
 <!-- Core plugin JavaScript-->
 <script src="{% static 'admin-lte/bootstrap/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 <script src="{% static 'admin-lte/bootstrap/js/sb-admin-2.min.js' %}"></script>
+
+<!-- plotly -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 <script>
     $(document).ready(function () {
         var predictVar = "";
@@ -201,37 +287,56 @@
         var file;
         console.log(sessionStorage.getItem("feature"));
         console.log(document.cookie.split('='));
+        // CSS show the section
+        $('#latitudelongitudemandatoryid').css('display', 'block');
+        $("#uploaddataspinner").css('display', 'block');
+        $("#fileanalysisspinner").css('display', 'block');
+        $("#runmodelid").css('display', 'block');
+        $('#visualize').css('display', 'block');
+        $("#DownloadResults").css('display', 'block');
+        $("#modelpredictionspinner").css('display', 'block');
+        $("#modelprocesssuccessfulmessageid").css('display', 'block');
+        $("#perfect").css('display', 'block');
+        $("#excelnotacceptedbymodelid").css('display', 'block');
+        $("#rerunmodeloferrorid").css('display', 'block');
+        $("#reset").css('display', 'block');
+
+        // JQuery hide the division
+
         $("#uploaddataspinner").hide();
         $("#fileanalysisspinner").hide();
-        $("#goToPredict").hide();
+        $("#runmodelid").hide();
+        $('#visualize').hide();
+        $("#DownloadResults").hide();
         $("#modelpredictionspinner").hide();
         $("#modelprocesssuccessfulmessageid").hide();
         $("#perfect").hide();
         $("#excelnotacceptedbymodelid").hide();
         $("#latitudelongitudemandatoryid").hide();
         $("#rerunmodeloferrorid").hide();
-        document.getElementById("next1").disabled = false;
-        document.getElementById("next2").disabled = true;
+        $("#reset").hide();
+        // document.getElementById("next1").disabled = false;
+        // document.getElementById("next2").disabled = true;
 
 
 
         $('#OpenImgUpload').click(function () { 
-            if (sessionStorage.getItem('feature')){
-                alert("We already have your data and uploading data again will overwrite the old dataset.");
-            }
+            // if (sessionStorage.getItem('feature')){
+            //     var r = confirm("We already have your data and uploading data again will overwrite the old dataset.");
+            // }
             if (document.getElementById('tpradiobtn').checked){
                 predictVar = "TotalPhosphorus";
-                document.getElementById('tpParams').style.color = "slateblue";
+                // document.getElementById('tpParams').style.color = "slateblue";
                 sessionStorage.setItem('feature','tp');
             }
             if (document.getElementById('tnradiobtn').checked){
                 predictVar = "TotalNitrogen";
-                document.getElementById('tnParams').style.color = "slateblue";
+                // document.getElementById('tnParams').style.color = "slateblue";
                 sessionStorage.setItem('feature','tn');
             }
-            if(document.getElementById('visualizeOnMap').checked){
-                visualizeOnMap = "yes";
-            }
+            // if(document.getElementById('visualizeOnMap').checked){
+            //     visualizeOnMap = "yes";
+            // }
             console.log(predictVar, visualizeOnMap);
             if (predictVar){
                 $('#imgupload').trigger('click'); 
@@ -301,18 +406,15 @@
                 }
             });
         });
-
+       
         $('#next1').click(function (){
+            $("#reset").show();
             $("#uploaddataspinner").show();
-            $("#next1").hide();
-            document.getElementById('card1').classList.remove("border-primary");
-            document.getElementById('card2').classList.add("border-primary");
-
-            const feature_required_tp = ['pH', '250mLandCover_Natural', 'DissolvedOxygen', 'Population', 
-                'Chloride', 'Nitrite', 'TotalSuspendedSolids', 'Nitrogen_Kjeldahl'];
-            const feature_required_tn = ['Month', 'pH', 'Population', '10mLandCover_Natural',
-                '10mLandCover_AnthropogenicNatural','TotalSuspendedSolids', 'Conductivity',
-                'TotalPhosphorus' , 'Chloride' , 'Nitrate'];
+            document.getElementById("next1").disabled = true;
+            $('#initialtext').hide();
+           
+            const feature_required_tp = ['pH',	'250mLandCover_Natural (ha)',	'DissolvedOxygen (mg/L)',	'Total Rain (mm) -7day Total',	'Population',	'Nitrate (mg/L)',	'Chloride (mg/L)',	'Nitrite (mg/L)',	'TotalNitrogen (mg/L)',	'TotalSuspendedSolids (mg/L)',	'Nitrogen_Kjeldahl (mg/L)'];
+            const feature_required_tn = ['Month','pH','Population','10mLandCover_Natural(ha)','10mLandCover_AnthropogenicNatural(ha)','TotalSuspendedSolids (mg/L)',	'Conductivity (K)',	'TotalPhosphorus (mg/L)','Chloride (mg/L)',	'Nitrate (mg/L)'];
             var features_in_usecsv = [];
             getData();
             async function getData(){
@@ -374,7 +476,7 @@
                     }
                     ul = document.getElementById('missing_features');
                     let li = document.createElement('li');
-                        li.classList.add('list-group-item', 'active');
+                        li.classList.add('list-group-item');
                         ul.appendChild(li);
                         li.innerHTML = "Missing Features in uploaded CSV: ";
                     missing.forEach(item => {
@@ -393,7 +495,10 @@
                     $(".selectionradiobutton").prop("disabled", true);
                     $("#perfect").show();
                     document.getElementById("perfect").innerHTML = "All the features are present in the file that was uploaded for prediction."
-                    document.getElementById("next2").disabled = false;
+                    // document.getElementById("next2").disabled = false;
+                    // next2 code here
+                    next2();
+
                 }
                 $("#uploaddataspinner").hide();
                 $("#next1").show();
@@ -402,12 +507,11 @@
                 location.reload();
             });
         });
-        $('#next2').click(function (){
+        function next2(){
             $("#fileanalysisspinner").show();
-            $("#next2").hide();
+            $("#next1").hide();
             $("#excelnotacceptedbymodelid").hide();
-            document.getElementById('card2').classList.remove("border-primary");
-            document.getElementById('card3').classList.add("border-primary");
+           
             var radiosdefault = document.querySelector("input[type='radio'][name=flexRadioDefault]:checked").value;
             csrftoken = document.cookie.split('=')[1];
             $.ajax({
@@ -431,7 +535,7 @@
                             $("#modelshapewarn").html(data.shapedecision.message);
                         }
                         $("#fileanalysisspinner").hide();
-                        $("#next2").show();
+                        $("#runmodelid").show();
                     },
                     error: function (error) {
                         console.log("Error" + JSON.stringify(error));
@@ -439,7 +543,7 @@
                         $("#next2").show();
                     }
             }); 
-        });
+        };
         $(document).on('click', '#runmodelid', function () {
             var radiosdefault = document.querySelector("input[type='radio'][name=flexRadioDefault]:checked").value;
             $("#excelnotacceptedbymodelid").hide();
@@ -455,7 +559,8 @@
                     console.log("data" + JSON.stringify(data));
                     if(data.status == "success"){
                         $("#runmodelid").hide();
-                        $("#goToPredict").show();
+                        $("#DownloadResults").show();
+                        $("#visualize").show();
                         $("#predictionbeforedivid").hide();
                         $("#modelprocesssuccessfulmessageid").show();
                         sessionStorage.setItem('parameterselected',data.studydonefor);
@@ -476,12 +581,49 @@
             });
         });
 
+        $(document).on('click', '#visualize', function () {
+            $.ajax({
+                type:"GET",
+                url: '/trial',
+                success: function(data){
+                    console.log('trial checked');
+                    console.log(data.array);
+                    console.log(data.lastcol);
+                    var gt = "";
+                    if (data.lastcol == "TotalPhosphorus"){
+                        gt = "Total Phosphorus (mg/L)";
+                    }
+                    else{
+                        gt = "Total Nitrogen (mg/L)";
+                    }
+                    var trace1 = {
+                        // x: data.graph1x,
+                        y: data.array,
+                        mode: 'lines'
+                    };
+                    var layout1 = {
+                        title: 'Predicted '+gt,
+                        yaxis: {
+                            title: gt,
+                        },
+                        xaxis: {
+                            title: 'Rows'
+                        },
+                    };
+                    var g1 = [trace1];
+                    $('#graphspace').css("height","780px");
+                    // Plotly.newPlot('visualizemodal', g1, layout1); 
+                    Plotly.newPlot('textplot', g1, layout1); 
+                }
+            });
+        });
+
         $(document).on('click', '#goToPredict', function(){
             window.location.href = window.location.origin + '/models';
         });
 
         $(document).on('click', '#rerunmodeloferrorid', function(){
-            window.location.href = window.location.origin + '/uploaddata';
+            window.location.href = window.location.origin + '/new_upload_data';
         });
 
         
